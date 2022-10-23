@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "503015714076",
+    "firebase_url": "https://daktari-a71a9-default-rtdb.firebaseio.com",
+    "project_id": "daktari-a71a9",
+    "storage_bucket": "daktari-a71a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503015714076:android:29d28bd8b2730e1798ded9",
+        "android_client_info": {
+          "package_name": "com.hfad.daktari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503015714076-0p5j4t0rjq546t382hfg8rcm24l9naus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQircVdr9M1PgxAauIOaV48nGriSsFtCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503015714076-0p5j4t0rjq546t382hfg8rcm24l9naus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503015714076:android:cd9d6d60f3222ea798ded9",
+        "android_client_info": {
+          "package_name": "com.hfad.daktari1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503015714076-0p5j4t0rjq546t382hfg8rcm24l9naus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQircVdr9M1PgxAauIOaV48nGriSsFtCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503015714076-0p5j4t0rjq546t382hfg8rcm24l9naus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
