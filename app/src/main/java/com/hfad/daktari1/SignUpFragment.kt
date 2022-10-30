@@ -1,7 +1,9 @@
 package com.hfad.daktari1
 
 import android.R
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +11,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.hfad.daktari1.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDataBase: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +35,10 @@ class SignUpFragment : Fragment() {
         binding.loader.visibility = View.INVISIBLE
 
         mAuth = FirebaseAuth.getInstance()
+        mDataBase = FirebaseDatabase.getInstance().getReference("doctors")
+
+
+
 
         binding.btnSignUp.setOnClickListener {
             val email = binding.edtEmail.text.toString()
@@ -36,10 +47,31 @@ class SignUpFragment : Fragment() {
             invisible()
             loader()
             signUp(email,password)
+            getRegistrationToken()
         }
 
         return view
 }
+
+    private fun getRegistrationToken() {
+        var uid = mAuth.currentUser?.uid
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Add token to database
+            if (uid != null){
+                mDataBase.child(uid).child("token").setValue(token)
+
+            }
+
+        })
+    }
 
     private fun loader(){
         val loader = binding.loader

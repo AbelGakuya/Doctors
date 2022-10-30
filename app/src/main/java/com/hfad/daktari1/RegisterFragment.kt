@@ -29,6 +29,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.*
 
@@ -39,6 +42,9 @@ class RegisterFragment : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
     private lateinit var dialog: Dialog
+
+
+    private lateinit var doctor : Doctor
 
 
 
@@ -56,7 +62,7 @@ class RegisterFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance()
 
-      val  uid = mAuth.currentUser?.uid
+     var uid = mAuth.currentUser?.uid
 
         databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
 
@@ -73,24 +79,8 @@ class RegisterFragment : Fragment() {
             val lastName = binding.edtLastName.text.toString()
             val name = title + " " + firstName + " " + lastName
             val bio = binding.edtBio.text.toString()
-
-            val doctor = Doctor(title, firstName, lastName, name, bio, uid)
-
-            if (uid != null){
-                databaseReference.child(uid).setValue(doctor).addOnCompleteListener {
-                    if (it.isSuccessful){
-
-                        uploadImage()
-
-                        val directions = RegisterFragmentDirections.actionRegisterFragmentToMainActivity2()
-                        findNavController().navigate(directions)
-
-                    }else{
-                        hideProgressBar()
-                        Toast.makeText(context, "You are not a registered Doctor!", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            doctor = Doctor(title, firstName, lastName, name, bio, uid)
+            addToDatabase()
         }
 
 
@@ -98,10 +88,26 @@ class RegisterFragment : Fragment() {
         return view
     }
 
+    private fun addToDatabase() = CoroutineScope(Dispatchers.IO).launch {
+        var uid = mAuth.currentUser?.uid
+        if (uid != null){
+            databaseReference.child(uid).setValue(doctor).addOnCompleteListener {
+                if (it.isSuccessful){
+                    uploadImage()
+                    val directions = RegisterFragmentDirections.actionRegisterFragmentToMainActivity2()
+                    findNavController().navigate(directions)
+                }else{
+                    hideProgressBar()
+                    Toast.makeText(context, "You are not a registered Doctor!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+
 
 
     private fun selectImage() {
-
         val intent = Intent()
         intent.setType("image/*")
         intent.setAction(Intent.ACTION_GET_CONTENT)
@@ -110,8 +116,7 @@ class RegisterFragment : Fragment() {
                 intent,
                 "Select Image from here..."
             ),
-
-        PICK_IMAGE_REQUEST
+            PICK_IMAGE_REQUEST
         )
     }
 
@@ -149,13 +154,10 @@ class RegisterFragment : Fragment() {
     private fun uploadImage() {
         val  uid = mAuth.currentUser?.uid
         val filename = UUID.randomUUID().toString()
-
         storageReference = FirebaseStorage.getInstance().getReference("/images/$filename")
         storageReference.putFile(filePath).addOnSuccessListener {
             hideProgressBar()
             Toast.makeText(context, "Profile Successfully Updated", Toast.LENGTH_SHORT).show()
-
-
             storageReference.downloadUrl.addOnSuccessListener {
                 it.toString()
                 if (uid != null) {
@@ -168,8 +170,6 @@ class RegisterFragment : Fragment() {
         /*    if (uid != null) {
                 databaseReference.child(uid).child("imageUrl").setValue("/images/$filename")
             }*/
-
-
         }.addOnFailureListener{
             hideProgressBar()
             Toast.makeText(context,"Failed to update profile", Toast.LENGTH_SHORT).show()
