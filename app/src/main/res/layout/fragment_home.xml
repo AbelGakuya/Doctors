@@ -42,6 +42,7 @@
         android:padding="15dp"/>
 
     <androidx.cardview.widget.CardView
+        android:padding="10dp"
         android:id="@+id/availabilityCardView"
         android:layout_below="@id/msg"
         android:layout_marginTop="20dp"
@@ -53,6 +54,7 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/firstLinearLayout">

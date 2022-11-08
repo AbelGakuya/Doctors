@@ -11,13 +11,20 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.hfad.daktari1.RegisterFragmentDirections
 
 import com.hfad.daktari1.databinding.FragmentHomeBinding
+import com.hfad.daktari1.firebase.AvailabilityF
 import com.hfad.daktari1.roomdatabase.*
 import kotlinx.coroutines.Job
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random
 
 
 class HomeFragment : Fragment() {
@@ -26,6 +33,11 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: AvailabilityAdapter
     private lateinit var availability:List<Availability>
     private lateinit var mViewModel: AvailabilityViewModel
+
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
+
+    private var uid: String? = null
 
     private lateinit var recyclerView: RecyclerView
 
@@ -36,6 +48,14 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        mAuth = FirebaseAuth.getInstance()
+        uid = mAuth.currentUser?.uid
+
+     //   val uid = mAuth.currentUser?.uid
+
+        databaseReference = FirebaseDatabase.getInstance().
+        getReference("doctors").child(uid!!).child("Availability")
 
 
         val date = binding.date
@@ -61,50 +81,43 @@ class HomeFragment : Fragment() {
 
         })
 
-
-
-
-
         delete()
-
-
-     /*   val application = requireNotNull(this.activity).application
-        val dao = AvailabilityDatabase.getInstance(application).availabilityDao
-        val viewModelFactory = AvailabilityViewModelFactory(dao)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(AvailabilityViewModel::class.java)
-
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        adapter = AvailabilityAdapter(requireActivity())
-        binding.availabilityList.adapter = adapter
-
-
-       /* availability = viewModel.availability.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.data = it
-            }
-        })*/
-
-        availability = viewModel.availability
-        adapter.data = availability*/
-
 
 
         return view
     }
+
+
+
+
+
+
+
 
     private fun insertToDatabase(){
 
         val date = binding.date.text.toString()
         val startTime = binding.startTime.text.toString()
         val endTime = binding.endTime.text.toString()
+        val availabilityId = Random.nextInt()
 
-        val availability = Availability(0, date, startTime, endTime)
-
+        val availability = Availability(0,availabilityId, date, startTime, endTime)
         mViewModel.addAvailability(availability)
-        Toast.makeText(requireContext(), "Successfully added", Toast.LENGTH_SHORT).show()
+
+
+        //adding to Firebase
+        val availabilityF = AvailabilityF(availabilityId, date, startTime, endTime)
+
+        if (uid != null){
+            databaseReference.child(availabilityId.toString()).
+            setValue(availabilityF).addOnCompleteListener {
+                if (it.isSuccessful){
+                    Toast.makeText(requireContext(), "Successfully added", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(context, "Not added to firebase", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
     }
 
@@ -145,8 +158,26 @@ class HomeFragment : Fragment() {
 
                 val availability1 = availability[position]
 
+                val id = availability1.availabilityId
 
                 mViewModel.deleteAvailability(availability1)
+
+                if (uid != null){
+                    databaseReference.child(id.toString()).
+                    removeValue().addOnCompleteListener {
+                        if (it.isSuccessful){
+
+                            Toast.makeText(requireContext(), "Successfully deleted", Toast.LENGTH_SHORT).show()
+                        }else{
+
+                            Toast.makeText(context, "Unsuccessful", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
+
+
+
             }
 
         })

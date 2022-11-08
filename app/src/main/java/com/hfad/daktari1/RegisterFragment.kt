@@ -62,7 +62,7 @@ class RegisterFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance()
 
-     var uid = mAuth.currentUser?.uid
+     val uid = mAuth.currentUser?.uid
 
         databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
 
@@ -89,7 +89,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun addToDatabase() = CoroutineScope(Dispatchers.IO).launch {
-        var uid = mAuth.currentUser?.uid
+        val uid = mAuth.currentUser?.uid
         if (uid != null){
             databaseReference.child(uid).setValue(doctor).addOnCompleteListener {
                 if (it.isSuccessful){

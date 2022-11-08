@@ -8,7 +8,10 @@ import androidx.room.PrimaryKey
 data class Availability(
 
     @PrimaryKey(autoGenerate = true)
-    var availabilityId: Long = 0L,
+    var availabilityIdR: Long = 0,
+
+    @ColumnInfo(name = "availabilityId")
+    var availabilityId: Int = 0,
 
     @ColumnInfo(name = "date")
     var date: String = "",
