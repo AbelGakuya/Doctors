@@ -47,7 +47,6 @@ class RegisterFragment : Fragment() {
     private lateinit var doctor : Doctor
 
 
-
     private lateinit var filePath: Uri
     private val PICK_IMAGE_REQUEST = 22
     private lateinit var storageReference: StorageReference
@@ -81,6 +80,7 @@ class RegisterFragment : Fragment() {
             val bio = binding.edtBio.text.toString()
             doctor = Doctor(title, firstName, lastName, name, bio, uid)
             addToDatabase()
+            getRegistrationToken()
         }
 
 
@@ -175,6 +175,27 @@ class RegisterFragment : Fragment() {
             Toast.makeText(context,"Failed to update profile", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun getRegistrationToken() {
+        var uid = mAuth.currentUser?.uid
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Add token to database
+            if (uid != null){
+                databaseReference.child(uid).child("token").setValue(token)
+
+            }
+
+        })
+    }
+
 
 
     private fun showProgressBar(){

@@ -22,7 +22,7 @@ class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var mDataBase: DatabaseReference
+   // private lateinit var mDataBase: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,7 @@ class SignUpFragment : Fragment() {
         binding.loader.visibility = View.INVISIBLE
 
         mAuth = FirebaseAuth.getInstance()
-        mDataBase = FirebaseDatabase.getInstance().getReference("doctors")
+      //  mDataBase = FirebaseDatabase.getInstance().getReference("doctors")
 
 
 
@@ -47,13 +47,13 @@ class SignUpFragment : Fragment() {
             invisible()
             loader()
             signUp(email,password)
-            getRegistrationToken()
+           // getRegistrationToken()
         }
 
         return view
 }
 
-    private fun getRegistrationToken() {
+   /* private fun getRegistrationToken() {
         var uid = mAuth.currentUser?.uid
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -71,7 +71,7 @@ class SignUpFragment : Fragment() {
             }
 
         })
-    }
+    }*/
 
     private fun loader(){
         val loader = binding.loader
