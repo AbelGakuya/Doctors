@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".OrderActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Appointment request by: "
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:id="@+id/txt_request"/>
+
+    <Button
+        android:layout_below="@+id/txt_request"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:id="@+id/btn_accept"
+        android:text="ACCEPT"/>
+
+    <Button
+
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txt_request"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="DECLINE"/>
+
+</RelativeLayout>
