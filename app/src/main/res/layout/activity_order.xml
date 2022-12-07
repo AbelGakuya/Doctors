@@ -11,12 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Appointment request by: "
+        android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:id="@+id/txt_request"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/txt_request"
+        android:padding="10dp"
+        android:id="@+id/btns">
     <Button
-        android:layout_below="@+id/txt_request"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:id="@+id/btn_accept"
@@ -24,10 +31,13 @@
 
     <Button
 
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/txt_request"
+        android:layout_marginStart="30dp"
         android:layout_width="150dp"
         android:layout_height="50dp"
+        android:id="@+id/btn_decline"
         android:text="DECLINE"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
