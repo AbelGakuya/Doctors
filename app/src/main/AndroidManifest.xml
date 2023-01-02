@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Daktari1">
         <activity
+            android:name=".agora.MeetingDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".agora.MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".OrderActivity"
             android:exported="false" />
 
@@ -26,7 +32,6 @@
             </intent-filter>
         </service>
 
-
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -38,7 +43,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

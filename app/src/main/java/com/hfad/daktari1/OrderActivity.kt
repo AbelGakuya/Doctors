@@ -1,10 +1,12 @@
 package com.hfad.daktari1
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.google.gson.Gson
+import com.hfad.daktari1.agora.MeetingDetailsActivity
 import com.hfad.daktari1.databinding.ActivityOrderBinding
 import com.hfad.daktari1.notifications.NotificationData
 import com.hfad.daktari1.notifications.PushNotification
@@ -28,6 +30,8 @@ class OrderActivity : AppCompatActivity() {
 
 
         binding.btnAccept.setOnClickListener {
+
+
             val title = "Appointment ACCEPTED"
             val message = "Online appointment on "
 
@@ -39,6 +43,9 @@ class OrderActivity : AppCompatActivity() {
                     sendNotification(it)
                 }
             }
+
+            val intent = Intent(this, MeetingDetailsActivity::class.java)
+            startActivity(intent)
 
 
         }
