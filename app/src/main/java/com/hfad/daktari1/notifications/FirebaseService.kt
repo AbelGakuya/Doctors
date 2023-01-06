@@ -28,6 +28,8 @@ class FirebaseService : FirebaseMessagingService() {
         val intent = Intent(this, OrderActivity::class.java)
         intent.putExtra("client_token", message.data["token2"])
         intent.putExtra("name", message.data["name"])
+        intent.putExtra("docName", message.data["docName"])
+
         intent.putExtra("date", message.data["date"])
         intent.putExtra("startTime", message.data["startTime"])
         intent.putExtra("endTime", message.data["endTime"])
