@@ -26,7 +26,7 @@ class OrderActivity : AppCompatActivity() {
         val view = binding.root
 
         val token2 = intent.getStringExtra("client_token")
-        val title = intent.getStringExtra("title")
+       // val title = intent.getStringExtra("title")
         val name = intent.getStringExtra("name")
         val docName = intent.getStringExtra("docName")
 

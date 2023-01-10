@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/drawable-v24/btn_background.xml" value="0.28307692307692306" />
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/drawable-v24/edt_background.xml" value="0.28307692307692306" />
+        <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/drawable/ic_baseline_videocam_24.xml" value="0.22037037037037038" />
+        <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.22037037037037038" />
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/layout/activity_login.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/layout/activity_main.xml" value="0.13196555217831812" />
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/layout/activity_main2.xml" value="0.2269021739130435" />
@@ -18,6 +20,8 @@
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/layout/fragment_registet.xml" value="0.1334853090172239" />
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/layout/fragment_sign_up.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/layout/fragment_splash.xml" value="0.15489130434782608" />
+        <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22037037037037038" />
+        <entry key="..\:/Users/Abel Mwangi/AndroidStudioProjects/Daktari1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22037037037037038" />
       </map>
     </option>
   </component>
