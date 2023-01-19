@@ -81,6 +81,7 @@ class RegisterFragment : Fragment() {
             doctor = Doctor(title, firstName, lastName, name, bio, uid)
             addToDatabase()
             getRegistrationToken()
+
         }
 
 
@@ -192,9 +193,9 @@ class RegisterFragment : Fragment() {
                 databaseReference.child(uid).child("token").setValue(token)
 
             }
-
         })
     }
+
 
 
 

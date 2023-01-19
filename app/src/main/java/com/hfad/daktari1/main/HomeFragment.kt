@@ -1,27 +1,37 @@
 package com.hfad.daktari1.main
 
 import android.app.DatePickerDialog
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.databinding.adapters.CalendarViewBindingAdapter.setDate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.hfad.daktari1.R
 import com.hfad.daktari1.RegisterFragmentDirections
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 
 import com.hfad.daktari1.databinding.FragmentHomeBinding
 import com.hfad.daktari1.firebase.AvailabilityF
 import com.hfad.daktari1.roomdatabase.*
 import kotlinx.coroutines.Job
+import java.nio.file.Files.delete
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random
@@ -51,6 +61,9 @@ class HomeFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance()
         uid = mAuth.currentUser?.uid
+
+
+
 
      //   val uid = mAuth.currentUser?.uid
 
@@ -86,13 +99,6 @@ class HomeFragment : Fragment() {
 
         return view
     }
-
-
-
-
-
-
-
 
     private fun insertToDatabase(){
 

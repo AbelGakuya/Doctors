@@ -5,12 +5,16 @@ import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_ONE_SHOT
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.hfad.daktari1.MainActivity
@@ -62,6 +66,24 @@ class FirebaseService : FirebaseMessagingService() {
             lightColor = Color.GREEN
         }
         notificationManager.createNotificationChannel(channel)
+    }
+
+    var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    var databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
+    var uid = mAuth.currentUser?.uid
+    override fun onNewToken(token: String) {
+        Log.d(ContentValues.TAG, "Refreshed token: $token")
+
+
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // FCM registration token to your app server.
+        // Add token to database
+        if (uid != null){
+            databaseReference.child(uid!!).child("token").setValue(token)
+
+        }
     }
 
 
