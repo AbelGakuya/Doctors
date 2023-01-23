@@ -1,7 +1,9 @@
 package com.hfad.daktari1
 
 import android.R
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +12,20 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import com.hfad.daktari1.databinding.FragmentLoginBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +38,9 @@ class LoginFragment : Fragment() {
         binding.loader.visibility = View.INVISIBLE
 
         mAuth = FirebaseAuth.getInstance()
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
+
 
         binding.btnLogin.setOnClickListener {
             val email = binding.edtEmail.text.toString()
@@ -80,6 +93,8 @@ class LoginFragment : Fragment() {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+
+                    getRegistrationToken()
                     val directions = LoginFragmentDirections.actionLoginFragmentToMainActivity()
 
                     findNavController().navigate(directions)
@@ -105,6 +120,31 @@ class LoginFragment : Fragment() {
         binding.btnLogin.visibility = View.VISIBLE
         binding.text1.visibility = View.VISIBLE
         binding.btnSignUp.visibility = View.VISIBLE
+    }
+
+    fun getRegistrationToken() = CoroutineScope(Dispatchers.IO).launch{
+        var uid = mAuth.currentUser?.uid
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            //  sharedViewModelClientToken.saveContent(token)
+
+            // Add token to database
+            if (uid != null){
+                databaseReference.child(uid).child("token").setValue(token)
+
+            }
+
+        })
+
+
     }
 
 }

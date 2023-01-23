@@ -80,7 +80,7 @@ class RegisterFragment : Fragment() {
             val bio = binding.edtBio.text.toString()
             doctor = Doctor(title, firstName, lastName, name, bio, uid)
             addToDatabase()
-            getRegistrationToken()
+          //  getRegistrationToken()
 
         }
 
@@ -177,24 +177,24 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun getRegistrationToken() {
-        var uid = mAuth.currentUser?.uid
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            // Add token to database
-            if (uid != null){
-                databaseReference.child(uid).child("token").setValue(token)
-
-            }
-        })
-    }
+//    private fun getRegistrationToken() {
+//        var uid = mAuth.currentUser?.uid
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+//                return@OnCompleteListener
+//            }
+//
+//            // Get new FCM registration token
+//            val token = task.result
+//
+//            // Add token to database
+//            if (uid != null){
+//                databaseReference.child(uid).child("token").setValue(token)
+//
+//            }
+//        })
+//    }
 
 
 

@@ -1,6 +1,7 @@
 package com.hfad.daktari1
 
 import android.R
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +16,18 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+
 import com.google.firebase.messaging.FirebaseMessaging
 import com.hfad.daktari1.databinding.FragmentSignUpBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
    // private lateinit var mDataBase: DatabaseReference
 
     override fun onCreateView(
@@ -35,7 +41,10 @@ class SignUpFragment : Fragment() {
         binding.loader.visibility = View.INVISIBLE
 
         mAuth = FirebaseAuth.getInstance()
-      //  mDataBase = FirebaseDatabase.getInstance().getReference("doctors")
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
+
+        //  mDataBase = FirebaseDatabase.getInstance().getReference("doctors")
 
 
 
@@ -99,6 +108,8 @@ class SignUpFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
 
+                    getRegistrationToken()
+
                     val directions = SignUpFragmentDirections.actionSignUpFragmentToRegisterFragment()
                     findNavController().navigate(directions)
 
@@ -120,6 +131,30 @@ class SignUpFragment : Fragment() {
         binding.btnSignUp.visibility = View.VISIBLE
     }
 
+    fun getRegistrationToken() = CoroutineScope(Dispatchers.IO).launch{
+        var uid = mAuth.currentUser?.uid
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            //  sharedViewModelClientToken.saveContent(token)
+
+            // Add token to database
+            if (uid != null){
+                databaseReference.child(uid).child("token").setValue(token)
+
+            }
+
+        })
+
+
+    }
 
 
 
