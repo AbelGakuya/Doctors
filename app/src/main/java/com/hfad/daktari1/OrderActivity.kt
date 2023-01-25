@@ -34,8 +34,7 @@ class OrderActivity : AppCompatActivity() {
         val view = binding.root
 
         databaseReference = FirebaseDatabase.getInstance().getReference("patients")
-       // val token2 = intent.getStringExtra("client_token")
-       // val title = intent.getStringExtra("title")
+
         val name = intent.getStringExtra("name")
         val docName = intent.getStringExtra("docName")
 
@@ -47,37 +46,21 @@ class OrderActivity : AppCompatActivity() {
 
 
 
-//
-//
-//        databaseReference.child(uid!!).addValueEventListener(object :ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()){
-//                    for (patientSnapshot in snapshot.children){
-//                        val patient = patientSnapshot.getValue(PatientData::class.java)
-//                        token = patient?.token
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//               // Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
+
 
         getPatientToken(uid)
 
         binding.txtRequest.text = "Apointment request by $name"
         binding.txtMessage.text = "On $date from $startTime to $endTime"
 
-     //   Toast.makeText(this, "Token is $token1", Toast.LENGTH_LONG).show()
+
 
 
 
 
         binding.btnAccept.setOnClickListener {
 
-          //  Toast.makeText(this, "Token is $token1", Toast.LENGTH_LONG).show()
+
 
 
             val title = "Appointment ACCEPTED"
