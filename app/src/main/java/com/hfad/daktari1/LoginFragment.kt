@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.google.android.datatransport.runtime.retries.Retries.retry
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.hfad.daktari1.databinding.FragmentLoginBinding
@@ -45,10 +46,15 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.edtEmail.text.toString()
             val password = binding.edtPassword.text.toString()
-            binding.loader.visibility = View.VISIBLE
-            invisible()
-            loader()
-            login(email, password)
+
+            if (email.isNullOrBlank()&& password.isNullOrBlank()){
+                Toast.makeText(requireContext(), "Please fill all the details", Toast.LENGTH_LONG).show()
+            } else {
+                binding.loader.visibility = View.VISIBLE
+                invisible()
+                loader()
+                login(email, password)
+            }
 
         }
 

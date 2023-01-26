@@ -59,10 +59,6 @@ class OrderActivity : AppCompatActivity() {
 
 
         binding.btnAccept.setOnClickListener {
-
-
-
-
             val title = "Appointment ACCEPTED"
             val message = "Online appointment on $date from $startTime to $endTime"
 
