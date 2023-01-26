@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.google.android.datatransport.runtime.retries.Retries.retry
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -52,11 +53,17 @@ class SignUpFragment : Fragment() {
         binding.btnSignUp.setOnClickListener {
             val email = binding.edtEmail.text.toString()
             val password = binding.edtPassword.text.toString()
-            binding.loader.visibility = View.VISIBLE
-            invisible()
-            loader()
-            signUp(email,password)
-           // getRegistrationToken()
+
+            if (email.isNullOrBlank()&&password.isNullOrBlank()){
+                Toast.makeText(requireContext(), "Please fill the required details", Toast.LENGTH_LONG).show()
+            } else {
+                binding.loader.visibility = View.VISIBLE
+                invisible()
+                loader()
+                signUp(email, password)
+                // getRegistrationToken()
+
+            }
         }
 
         return view
