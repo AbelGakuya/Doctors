@@ -43,25 +43,14 @@ class OrderActivity : AppCompatActivity() {
         val endTime = intent.getStringExtra("endTime")
         val uid = intent.getStringExtra("uid")
       //  Toast.makeText(this, "Token is $uid", Toast.LENGTH_LONG).show()
-
-
-
-
-
         getPatientToken(uid)
-
         binding.txtRequest.text = "Apointment request by $name"
         binding.txtMessage.text = "On $date from $startTime to $endTime"
-
-
-
-
 
 
         binding.btnAccept.setOnClickListener {
             val title = "Appointment ACCEPTED"
             val message = "Online appointment on $date from $startTime to $endTime"
-
             if (message.isNotEmpty()){
                 PushNotification(
                     NotificationData(title, message,docName
@@ -71,19 +60,15 @@ class OrderActivity : AppCompatActivity() {
                     sendNotification(it)
                 }
             }
-
             Toast.makeText(this, "Sent to $name", Toast.LENGTH_LONG).show()
-
             val intent = Intent(this, MeetingDetailsActivity::class.java)
             startActivity(intent)
-
-
         }
+
 
         binding.btnDecline.setOnClickListener {
             val title = "Appointment DECLINED"
             val message = "Please choose another doctor"
-
             if (message.isNotEmpty()){
                 PushNotification(
                     NotificationData(title, message,docName,date,startTime,endTime),

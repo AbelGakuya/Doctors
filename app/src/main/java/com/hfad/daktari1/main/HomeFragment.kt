@@ -38,17 +38,13 @@ import kotlin.random.Random
 
 
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: AvailabilityAdapter
     private lateinit var availability:List<Availability>
     private lateinit var mViewModel: AvailabilityViewModel
-
     private lateinit var mAuth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
-
     private var uid: String? = null
-
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -58,19 +54,11 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
-
         mAuth = FirebaseAuth.getInstance()
         uid = mAuth.currentUser?.uid
-
-
-
-
-     //   val uid = mAuth.currentUser?.uid
-
+        //   val uid = mAuth.currentUser?.uid
         databaseReference = FirebaseDatabase.getInstance().
         getReference("doctors").child(uid!!).child("Availability")
-
-
         val date = binding.date
 
         date.setOnClickListener {
@@ -87,16 +75,12 @@ class HomeFragment : Fragment() {
         recyclerView = binding.availabilityList
         recyclerView.adapter = adapter
 
-
         //viewModel
         mViewModel.readAllData.observe(viewLifecycleOwner, Observer { availability ->
             adapter.setData(availability)
 
         })
-
         delete()
-
-
         return view
     }
 
@@ -172,10 +156,8 @@ class HomeFragment : Fragment() {
                     databaseReference.child(id.toString()).
                     removeValue().addOnCompleteListener {
                         if (it.isSuccessful){
-
                             Toast.makeText(requireContext(), "Successfully deleted", Toast.LENGTH_SHORT).show()
                         }else{
-
                             Toast.makeText(context, "Unsuccessful", Toast.LENGTH_SHORT).show()
                         }
                     }

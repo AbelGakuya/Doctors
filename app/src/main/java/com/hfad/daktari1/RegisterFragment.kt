@@ -42,11 +42,7 @@ class RegisterFragment : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
     private lateinit var dialog: Dialog
-
-
     private lateinit var doctor : Doctor
-
-
     private lateinit var filePath: Uri
     private val PICK_IMAGE_REQUEST = 22
     private lateinit var storageReference: StorageReference
@@ -58,14 +54,10 @@ class RegisterFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
         val view = binding.root
-
         mAuth = FirebaseAuth.getInstance()
-
-     val uid = mAuth.currentUser?.uid
-
+        val uid = mAuth.currentUser?.uid
         databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
-
-      //  val uidd = databaseReference.child()
+        //  val uidd = databaseReference.child()
 
         binding.profileImage.setOnClickListener {
             selectImage()
@@ -81,11 +73,7 @@ class RegisterFragment : Fragment() {
             doctor = Doctor(title, firstName, lastName, name, bio, uid)
             addToDatabase()
           //  getRegistrationToken()
-
         }
-
-
-
         return view
     }
 

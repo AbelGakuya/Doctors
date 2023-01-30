@@ -38,22 +38,14 @@ class SignUpFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         val view = binding.root
-
         binding.loader.visibility = View.INVISIBLE
-
         mAuth = FirebaseAuth.getInstance()
-
         databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
-
         //  mDataBase = FirebaseDatabase.getInstance().getReference("doctors")
 
-
-
-
         binding.btnSignUp.setOnClickListener {
-            val email = binding.edtEmail.text.toString()
-            val password = binding.edtPassword.text.toString()
-
+            val email = binding.edtEmail.text.trim().toString()
+            val password = binding.edtPassword.text.trim().toString()
             if (email.isNullOrBlank()&&password.isNullOrBlank()){
                 Toast.makeText(requireContext(), "Please fill the required details", Toast.LENGTH_LONG).show()
             } else {
@@ -62,10 +54,8 @@ class SignUpFragment : Fragment() {
                 loader()
                 signUp(email, password)
                 // getRegistrationToken()
-
             }
         }
-
         return view
 }
 
@@ -114,20 +104,16 @@ class SignUpFragment : Fragment() {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-
                     getRegistrationToken()
-
                     val directions = SignUpFragmentDirections.actionSignUpFragmentToRegisterFragment()
                     findNavController().navigate(directions)
-
-                  //  activity?.finish()
+                //  activity?.finish()
                 } else {
                     Toast.makeText(context, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
                     retry()
                 }
             }
-
     }
 
     private fun retry(){
@@ -140,30 +126,18 @@ class SignUpFragment : Fragment() {
 
     fun getRegistrationToken() = CoroutineScope(Dispatchers.IO).launch{
         var uid = mAuth.currentUser?.uid
-
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
-
             // Get new FCM registration token
             val token = task.result
-
             //  sharedViewModelClientToken.saveContent(token)
-
             // Add token to database
             if (uid != null){
                 databaseReference.child(uid).child("token").setValue(token)
-
             }
-
         })
-
-
     }
-
-
-
-
 }
