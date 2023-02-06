@@ -89,11 +89,9 @@ class OrderActivity : AppCompatActivity() {
         databaseReference.child(uid!!).addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
-
                     val patient = snapshot.getValue(PatientData::class.java)
                       var  token = patient?.token
                     sendToken(token)
-
                 }
             }
 
