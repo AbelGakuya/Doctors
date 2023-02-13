@@ -28,6 +28,7 @@ class OrderActivity : AppCompatActivity() {
 
     var token1: String? = "245"
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOrderBinding.inflate(layoutInflater)
@@ -35,14 +36,14 @@ class OrderActivity : AppCompatActivity() {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("patients")
 
-        val name = intent.getStringExtra("name")
-        val docName = intent.getStringExtra("docName")
-
-        val date = intent.getStringExtra("date")
-        val startTime = intent.getStringExtra("startTime")
-        val endTime = intent.getStringExtra("endTime")
-        val uid = intent.getStringExtra("uid")
-      //  Toast.makeText(this, "Token is $uid", Toast.LENGTH_LONG).show()
+        var  name = intent.getStringExtra("name1")
+        val docName = intent.getStringExtra("docName1")
+        val date = intent.getStringExtra("date1")
+        val startTime = intent.getStringExtra("startTime1")
+        val endTime = intent.getStringExtra("endTime1")
+       //  var uid = intent.getStringExtra("uid1")
+         var uid = "aIaxOUIke2YdsZj2FxxbWOFT6Kz1"
+        Toast.makeText(this, "Token is $uid", Toast.LENGTH_LONG).show()
         getPatientToken(uid)
         binding.txtRequest.text = "Apointment request by $name"
         binding.txtMessage.text = "On $date from $startTime to $endTime"
@@ -63,6 +64,7 @@ class OrderActivity : AppCompatActivity() {
             Toast.makeText(this, "Sent to $name", Toast.LENGTH_LONG).show()
             val intent = Intent(this, MeetingDetailsActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
 

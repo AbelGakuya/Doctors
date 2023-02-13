@@ -31,13 +31,12 @@ class FirebaseService : FirebaseMessagingService() {
 
         val intent = Intent(this, OrderActivity::class.java)
         //intent.putExtra("client_token", message.data["token2"])
-        intent.putExtra("uid",message.data["uid"])
-        intent.putExtra("name", message.data["name"])
-        intent.putExtra("docName", message.data["docName"])
-
-        intent.putExtra("date", message.data["date"])
-        intent.putExtra("startTime", message.data["startTime"])
-        intent.putExtra("endTime", message.data["endTime"])
+        intent.putExtra("uid1",message.data["uid"])
+        intent.putExtra("name1", message.data["name"])
+        intent.putExtra("docName1", message.data["docName"])
+        intent.putExtra("date1", message.data["date"])
+        intent.putExtra("startTime1", message.data["startTime"])
+        intent.putExtra("endTime1", message.data["endTime"])
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
