@@ -38,9 +38,10 @@ class LoginFragment : Fragment() {
         binding.loader.visibility = View.INVISIBLE
         mAuth = FirebaseAuth.getInstance()
         databaseReference = FirebaseDatabase.getInstance().getReference("doctors")
+
         binding.btnLogin.setOnClickListener {
-            val email = binding.edtEmail.text.toString()
-            val password = binding.edtPassword.text.toString()
+            val email = binding.edtEmail.text.trim().toString()
+            val password = binding.edtPassword.text.trim().toString()
 
             if (email.isNullOrBlank()&& password.isNullOrBlank()){
                 Toast.makeText(requireContext(), "Please fill all the details", Toast.LENGTH_LONG).show()

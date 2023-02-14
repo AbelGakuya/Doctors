@@ -28,7 +28,8 @@
             android:exported="false" />
         <activity
             android:name=".OrderActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true"/>
 
         <service
             android:name=".notifications.FirebaseService"

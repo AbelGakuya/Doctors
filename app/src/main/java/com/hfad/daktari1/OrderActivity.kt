@@ -45,7 +45,7 @@ class OrderActivity : AppCompatActivity() {
 
         //val intent = Intent()
 
-        val extras = intent.extras
+        val extras : Bundle? = intent.extras
         if (extras != null){
              name = extras.getString("name1")
              docName = intent.getStringExtra("docName1")
@@ -83,6 +83,7 @@ class OrderActivity : AppCompatActivity() {
             }
             Toast.makeText(this, "Sent to $name", Toast.LENGTH_LONG).show()
             val intent = Intent(this, MeetingDetailsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
             finish()
         }
@@ -99,6 +100,10 @@ class OrderActivity : AppCompatActivity() {
                     sendNotification(it)
                 }
             }
+            val intent = Intent(this, MeetingDetailsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            startActivity(intent)
+            finish()
         }
 
         setContentView(view)

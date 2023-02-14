@@ -40,6 +40,7 @@ class FirebaseService : FirebaseMessagingService() {
         bundle.putString("date1", message.data["date"])
         bundle.putString("startTime1", message.data["startTime"])
         bundle.putString("endTime1", message.data["endTime"])
+        bundle.putString("docName1", message.data["docName"])
 
 
         val intent = Intent(this, OrderActivity::class.java)
