@@ -19,6 +19,8 @@ import com.hfad.daktari1.notifications.PushNotification
 import com.hfad.daktari1.notifications.RetrofitInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+//import kotlinx.coroutines.NonCancellable.message
+//import kotlinx.coroutines.NonCancellable.message
 import kotlinx.coroutines.launch
 
 class OrderActivity : AppCompatActivity() {
@@ -27,6 +29,11 @@ class OrderActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
 
     var token1: String? = "245"
+    var name: String? = "rtg"
+    var docName: String? = ""
+    var date: String?=""
+    var startTime: String?=""
+    var endTime: String?=""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,17 +43,30 @@ class OrderActivity : AppCompatActivity() {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("patients")
 
-        var  name = intent.getStringExtra("name1")
-        val docName = intent.getStringExtra("docName1")
-        val date = intent.getStringExtra("date1")
-        val startTime = intent.getStringExtra("startTime1")
-        val endTime = intent.getStringExtra("endTime1")
-       //  var uid = intent.getStringExtra("uid1")
-         var uid = "aIaxOUIke2YdsZj2FxxbWOFT6Kz1"
-        Toast.makeText(this, "Token is $uid", Toast.LENGTH_LONG).show()
-        getPatientToken(uid)
-        binding.txtRequest.text = "Apointment request by $name"
-        binding.txtMessage.text = "On $date from $startTime to $endTime"
+        //val intent = Intent()
+
+        val extras = intent.extras
+        if (extras != null){
+             name = extras.getString("name1")
+             docName = intent.getStringExtra("docName1")
+             date = intent.getStringExtra("date1")
+             startTime = intent.getStringExtra("startTime1")
+             endTime = intent.getStringExtra("endTime1")
+
+            val uid = extras.getString("uid1")
+//         val uid = "aIaxOUIke2YdsZj2FxxbWOFT6Kz1"
+            Toast.makeText(this, "Token is $uid", Toast.LENGTH_LONG).show()
+
+            getPatientToken(uid)
+            setDetails(name,date,startTime,endTime)
+
+
+
+        }
+
+
+       // Toast.makeText(this, "Token is $name", Toast.LENGTH_SHORT).show()
+
 
 
         binding.btnAccept.setOnClickListener {
@@ -83,6 +103,12 @@ class OrderActivity : AppCompatActivity() {
 
         setContentView(view)
     }
+
+    private fun setDetails(name: String?, date: String?, startTime: String?, endTime: String?) {
+        binding.txtRequest.text = "Appointment request by $name"
+        binding.txtMessage.text = "Online appointment on $date at $startTime to $endTime"
+    }
+
 
     private fun getPatientToken(uid: String?) {
         databaseReference = FirebaseDatabase.getInstance().getReference("patients")

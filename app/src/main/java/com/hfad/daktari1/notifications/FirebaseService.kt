@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -29,14 +30,33 @@ class FirebaseService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
+//        val title = message.data["title"]
+//        val message = message.data["message"]
+
+        val bundle = Bundle()
+
+        bundle.putString("uid1", message.data["uid"])
+        bundle.putString("name1",message.data["name"])
+        bundle.putString("date1", message.data["date"])
+        bundle.putString("startTime1", message.data["startTime"])
+        bundle.putString("endTime1", message.data["endTime"])
+
+
         val intent = Intent(this, OrderActivity::class.java)
         //intent.putExtra("client_token", message.data["token2"])
-        intent.putExtra("uid1",message.data["uid"])
-        intent.putExtra("name1", message.data["name"])
-        intent.putExtra("docName1", message.data["docName"])
-        intent.putExtra("date1", message.data["date"])
-        intent.putExtra("startTime1", message.data["startTime"])
-        intent.putExtra("endTime1", message.data["endTime"])
+
+
+        intent.putExtras(bundle)
+
+//        intent.putExtra("uid1", message.data["uid"])
+//        intent.putExtra("name1",message.data["name"])
+//        intent.putExtra("docName1", message.data["docName"])
+//        intent.putExtra("date1", message.data["date"])
+//        intent.putExtra("startTime1", message.data["startTime"])
+//        intent.putExtra("endTime1", message.data["endTime"])
+//
+//        intent.putExtra("message",message.data["message"])
+
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
