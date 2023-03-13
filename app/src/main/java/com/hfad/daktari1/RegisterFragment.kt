@@ -37,7 +37,6 @@ import java.util.*
 
 
 class RegisterFragment : Fragment() {
-
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -91,7 +90,6 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
-
     }
 
 
